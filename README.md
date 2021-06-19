@@ -1,5 +1,6 @@
-# Python Instagram Bot SCript
+# Python Instagram Bot Script
 ## Automate Liking, Commenting and Following on Instagram Posts using these scripts
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/6ufFHT0fNWQ/0.jpg)](https://www.youtube.com/watch?v=6ufFHT0fNWQ)
 ### Installation
 Open terminal and type the following
 ```
