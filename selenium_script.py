@@ -25,6 +25,7 @@ LOGIN_BUTTON = "//button[@type='submit']"
 SEARCH_BY_TAG = URL + "/explore/tags/"
 POSTS_SEARCH = "//a[@tabindex='0']"
 LIKE_BUTTON = "//span[@class = 'fr66n']/button"
+LIKE_BUTTON_STATUS = "/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button/div/span/svg"
 CROSS_BUTTON = "//div[contains(@class, ' Igw0E     IwRSH      eGOV_         _4EzTm  ')]/button"
 COMMENT_BOX = "//textarea[contains(@aria-label, 'Add a comment')]"
 COMMENT_BUTTON = "//span[@class = '_15y0l']/button"
@@ -99,6 +100,8 @@ def like_post_by_tag(tagname, amount, comment_list = [], followpercentage=0):
         time.sleep(WAIT_TIME)
 
         # Search posts
+        while len(driver.find_elements_by_xpath(POSTS_SEARCH)) < 10:
+            continue
         posts_list = list(driver.find_elements_by_xpath(POSTS_SEARCH))[:10]
         choices = random.sample(posts_list, amount)
         number = len(driver.find_elements_by_xpath(LIKE_BUTTON))
@@ -118,8 +121,7 @@ def like_post_by_tag(tagname, amount, comment_list = [], followpercentage=0):
             try:
                 # Like the post
                 elmnt = ec_wait.until(EC.presence_of_element_located((By.XPATH, LIKE_BUTTON)))
-                driver.find_element_by_xpath(LIKE_BUTTON).click()
-                print("[INFO] Liked post {0}".format(driver.current_url))
+                like_button = driver.find_element_by_xpath(LIKE_BUTTON)
                 time.sleep(WAIT_TIME)
 
                 # If you have to add comment
@@ -170,11 +172,16 @@ def like_post_by_tag(tagname, amount, comment_list = [], followpercentage=0):
                                     driver.switch_to.window(driver.window_handles[0])
                                     time.sleep(WAIT_TIME)
 
-                                except:
-                                    # Don't follow the user if already following the user
-                                    print("[INFO] Already following {0}".format(driver.current_url))
-                                    driver.close()
-                                    driver.switch_to(driver.window_handles[0])
+                                except Exception as ex:
+                                    try:
+                                        print("Exception:", traceback.print_exc())
+                                        # Don't follow the user if already following the user
+                                        print("[INFO] Already following {0}".format(driver.current_url))
+                                        driver.close()
+                                        driver.switch_to(driver.window_handles[0])
+                                        time.sleep(WAIT_TIME)
+                                    except Exception as ex:
+                                        print("Exception:", traceback.print_exc())
 
                         except Exception as ex:
                             # Exception printing
