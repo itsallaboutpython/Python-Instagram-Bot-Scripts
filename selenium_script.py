@@ -121,6 +121,8 @@ def like_post_by_tag(tagname, amount, comment_list = [], followpercentage=0):
                 # Like the post
                 elmnt = ec_wait.until(EC.presence_of_element_located((By.XPATH, LIKE_BUTTON)))
                 like_button = driver.find_element_by_xpath(LIKE_BUTTON)
+                like_button.click()
+                print("[INFO] Liked post {0}".format(driver.current_url))
                 time.sleep(WAIT_TIME)
 
                 # If you have to add comment
