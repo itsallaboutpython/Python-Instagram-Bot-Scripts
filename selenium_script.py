@@ -87,6 +87,17 @@ def like_post_by_tag(tagname, amount, comment_list = [], followpercentage=0):
                 exit(0)
         except:
             pass
+        
+        # Check amount value
+        # as it should be between 0 to 10
+        try:
+            if 0 <= followpercentage <= 10:
+                pass
+            else:
+                print("[ERROR] Invalid value for 'amount' = '{0}'".format(followpercentage))
+                exit(0)
+        except:
+            pass
 
         # Start function
         print()
@@ -245,7 +256,7 @@ def main():
         while 1:
             # Take user input
             tags = input("Enter tag/tags you want to search (required) (separated by commas) (like 'python python3' etc): ").split(",")
-            amount = int(input("Enter amount of posts you want to check per tag (required): "))
+            amount = int(input("Enter amount of posts you want to check per tag (required) (not more than 10): "))
             followpercentage = int(input("Enter follow precentage (type '0' for no follows): "))
             comment_list = input("Enter list of comments you want to enter (separated by commans) (type nothing for no comments): ").split(",")
 
@@ -283,7 +294,7 @@ def main():
         print("[INFO] User stopped the program...exiting")
         exit(0)
     except TypeError:
-        print("[ERROR] Some input wasn entered wrong...please try again")
+        print("[ERROR] Some input was entered wrong...please try again")
         exit(0)
     except Exception:
         print("[ERROR] Something went wrong...please try again\n")
